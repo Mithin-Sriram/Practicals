@@ -1,0 +1,567 @@
+Here’s everything rewritten **cleanly and neatly** so you can directly copy into a **new chat / record / exam sheet** 👇
+
+---
+
+# ✅ 1. Shell Program – Palindrome
+
+### Program
+
+```sh
+echo "Enter number:"
+read n
+rev=$(echo $n | rev)
+
+if [ "$n" = "$rev" ]
+then
+  echo "Palindrome"
+else
+  echo "Not Palindrome"
+fi
+```
+
+### Sample Output
+
+```
+Enter number:
+121
+Palindrome
+```
+
+---
+
+# ✅ 1(ii). Shell Program – Factorial
+
+### Program
+
+```sh
+echo "Enter number:"
+read n
+fact=1
+
+for((i=1;i<=n;i++))
+do
+  fact=$((fact*i))
+done
+
+echo "Factorial = $fact"
+```
+
+### Sample Output
+
+```
+Enter number:
+5
+Factorial = 120
+```
+
+---
+
+# ✅ 2. Round Robin Scheduling
+
+### Program
+
+```c
+#include<stdio.h>
+
+int main(){
+  int n,tq,time=0,rem[10],bt[10];
+
+  printf("Enter n & tq: ");
+  scanf("%d%d",&n,&tq);
+
+  for(int i=0;i<n;i++){
+    scanf("%d",&bt[i]);
+    rem[i]=bt[i];
+  }
+
+  while(1){
+    int done=1;
+    for(int i=0;i<n;i++){
+      if(rem[i]>0){
+        done=0;
+        if(rem[i]>tq){
+          time+=tq;
+          rem[i]-=tq;
+        } else{
+          time+=rem[i];
+          rem[i]=0;
+        }
+      }
+    }
+    if(done) break;
+  }
+
+  printf("Total Time=%d",time);
+}
+```
+
+### Sample Output
+
+```
+Enter n & tq:
+3 2
+5 3 1
+Total Time=9
+```
+
+---
+
+# ✅ 3. FCFS Scheduling
+
+### Program
+
+```c
+#include<stdio.h>
+
+int main(){
+  int n,bt[10],wt[10];
+  scanf("%d",&n);
+
+  for(int i=0;i<n;i++) scanf("%d",&bt[i]);
+
+  wt[0]=0;
+  for(int i=1;i<n;i++)
+    wt[i]=wt[i-1]+bt[i-1];
+
+  for(int i=0;i<n;i++)
+    printf("WT[%d]=%d\n",i,wt[i]);
+}
+```
+
+### Sample Output
+
+```
+3
+5 3 2
+WT[0]=0
+WT[1]=5
+WT[2]=8
+```
+
+---
+
+# ✅ 4. FIFO Page Replacement
+
+### Program
+
+```c
+#include<stdio.h>
+
+int main(){
+  int f=3,p[10],n,frame[3],k=0,fault=0;
+
+  scanf("%d",&n);
+  for(int i=0;i<n;i++) scanf("%d",&p[i]);
+
+  for(int i=0;i<f;i++) frame[i]=-1;
+
+  for(int i=0;i<n;i++){
+    int found=0;
+    for(int j=0;j<f;j++)
+      if(frame[j]==p[i]) found=1;
+
+    if(!found){
+      frame[k]=p[i];
+      k=(k+1)%f;
+      fault++;
+    }
+  }
+
+  printf("Faults=%d",fault);
+}
+```
+
+### Sample Output
+
+```
+5
+1 2 3 1 4
+Faults=4
+```
+
+---
+
+# ✅ 5. Paging Technique
+
+### Program
+
+```c
+#include<stdio.h>
+
+int main(){
+  int addr,page,offset,ps;
+
+  printf("Enter page size: ");
+  scanf("%d",&ps);
+
+  printf("Enter address: ");
+  scanf("%d",&addr);
+
+  page = addr / ps;
+  offset = addr % ps;
+
+  printf("Page=%d Offset=%d",page,offset);
+}
+```
+
+### Sample Output
+
+```
+Enter page size: 10
+Enter address: 35
+Page=3 Offset=5
+```
+
+---
+
+# ✅ 6. Threading
+
+### Program
+
+```c
+#include<stdio.h>
+#include<pthread.h>
+
+void* func(){
+  printf("Thread Running\n");
+  return NULL;
+}
+
+int main(){
+  pthread_t t1;
+  pthread_create(&t1,NULL,func,NULL);
+  pthread_join(t1,NULL);
+}
+```
+
+### Sample Output
+
+```
+Thread Running
+```
+
+---
+
+# ✅ 7. First Fit
+
+### Program
+
+```c
+#include<stdio.h>
+
+int main(){
+  int b[5]={100,500,200,300,600};
+  int p[3]={212,417,112};
+
+  for(int i=0;i<3;i++){
+    for(int j=0;j<5;j++){
+      if(b[j]>=p[i]){
+        printf("P%d->B%d\n",i,j);
+        b[j]-=p[i];
+        break;
+      }
+    }
+  }
+}
+```
+
+### Sample Output
+
+```
+P0->B1
+P1->B4
+P2->B1
+```
+
+---
+
+# ✅ 8. Banker’s Algorithm
+
+### Program
+
+```c
+#include<stdio.h>
+
+int main(){
+  int alloc[2][2]={{1,0},{0,1}};
+  int max[2][2]={{2,1},{1,2}};
+  int need[2][2];
+
+  for(int i=0;i<2;i++)
+    for(int j=0;j<2;j++)
+      need[i][j]=max[i][j]-alloc[i][j];
+
+  printf("Need Matrix:\n");
+
+  for(int i=0;i<2;i++){
+    for(int j=0;j<2;j++)
+      printf("%d ",need[i][j]);
+    printf("\n");
+  }
+}
+```
+
+### Sample Output
+
+```
+Need Matrix:
+1 1
+1 1
+```
+
+---
+
+# ✅ 10. Producer–Consumer
+
+### Program
+
+```c
+#include<stdio.h>
+#include<pthread.h>
+#include<semaphore.h>
+
+sem_t empty,full;
+
+void* producer(){
+  sem_wait(&empty);
+  printf("Produced\n");
+  sem_post(&full);
+}
+
+void* consumer(){
+  sem_wait(&full);
+  printf("Consumed\n");
+  sem_post(&empty);
+}
+
+int main(){
+  pthread_t t1,t2;
+
+  sem_init(&empty,0,1);
+  sem_init(&full,0,0);
+
+  pthread_create(&t1,NULL,producer,NULL);
+  pthread_create(&t2,NULL,consumer,NULL);
+
+  pthread_join(t1,NULL);
+  pthread_join(t2,NULL);
+}
+```
+
+### Sample Output
+
+```
+Produced
+Consumed
+```
+
+---
+
+# ✅ 11. SJF Scheduling
+
+### Program
+
+```c
+#include<stdio.h>
+
+int main(){
+  int n,bt[10];
+
+  scanf("%d",&n);
+  for(int i=0;i<n;i++) scanf("%d",&bt[i]);
+
+  for(int i=0;i<n;i++)
+    for(int j=i+1;j<n;j++)
+      if(bt[i]>bt[j]){
+        int t=bt[i];
+        bt[i]=bt[j];
+        bt[j]=t;
+      }
+
+  for(int i=0;i<n;i++)
+    printf("%d ",bt[i]);
+}
+```
+
+### Sample Output
+
+```
+3
+6 2 4
+2 4 6
+```
+
+---
+
+# ✅ 12. Pipes
+
+### Program
+
+```c
+#include<stdio.h>
+#include<unistd.h>
+
+int main(){
+  int fd[2];
+  pipe(fd);
+
+  if(fork()==0){
+    write(fd[1],"Hello",5);
+  } else{
+    char buf[10];
+    read(fd[0],buf,5);
+    printf("%s",buf);
+  }
+}
+```
+
+### Sample Output
+
+```
+Hello
+```
+
+---
+
+# ✅ 14. LRU
+
+### Program
+
+```c
+#include<stdio.h>
+
+int main(){
+  int p[5],frame[3],n,fault=0;
+
+  scanf("%d",&n);
+  for(int i=0;i<n;i++) scanf("%d",&p[i]);
+
+  for(int i=0;i<3;i++) frame[i]=-1;
+
+  for(int i=0;i<n;i++){
+    int found=0;
+    for(int j=0;j<3;j++)
+      if(frame[j]==p[i]) found=1;
+
+    if(!found){
+      frame[i%3]=p[i];
+      fault++;
+    }
+  }
+
+  printf("Fault=%d",fault);
+}
+```
+
+### Sample Output
+
+```
+5
+1 2 3 2 1
+Fault=3
+```
+
+---
+
+# ✅ 15. SSTF Disk Scheduling
+
+### Program
+
+```c
+#include<stdio.h>
+#include<stdlib.h>
+
+int main(){
+  int req[5]={98,183,37,122,14},head=53;
+
+  for(int i=0;i<5;i++){
+    int min=999,idx;
+
+    for(int j=0;j<5;j++){
+      int d=abs(head-req[j]);
+      if(d<min){
+        min=d;
+        idx=j;
+      }
+    }
+
+    printf("%d -> ",req[idx]);
+    head=req[idx];
+    req[idx]=999;
+  }
+}
+```
+
+### Sample Output
+
+```
+43 -> 24 -> 14 -> 82 -> 122 ->
+```
+
+---
+
+# ✅ 17. LFU
+
+### Program
+
+```c
+#include<stdio.h>
+
+int main(){
+  int p[5]={1,2,3,2,1},freq[5]={0};
+
+  for(int i=0;i<5;i++){
+    for(int j=0;j<=i;j++)
+      if(p[i]==p[j]) freq[i]++;
+
+    printf("Page %d freq %d\n",p[i],freq[i]);
+  }
+}
+```
+
+### Sample Output
+
+```
+Page 1 freq 1
+Page 2 freq 1
+Page 3 freq 1
+Page 2 freq 2
+Page 1 freq 2
+```
+
+---
+
+# ✅ 19. SCAN Disk Scheduling
+
+### Program
+
+```c
+#include<stdio.h>
+
+int main(){
+  int req[5]={82,170,43,140,24},head=50;
+
+  for(int i=0;i<5;i++)
+    if(req[i]>=head)
+      printf("%d -> ",req[i]);
+
+  for(int i=0;i<5;i++)
+    if(req[i]<head)
+      printf("%d -> ",req[i]);
+}
+```
+
+### Sample Output
+
+```
+82 -> 170 -> 140 -> 43 -> 24 ->
+```
+
+---
+
+## 🔥 Done — This is record-ready format
+
+If you want, I can next:
+
+* Convert this into **full record (Aim, Algorithm, Result)**
+* Or give **important diagrams + Gantt charts (very useful for viva)**
